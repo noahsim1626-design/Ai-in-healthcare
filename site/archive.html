@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive | Daily AI x Healthcare</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Archive</h1>
+    <p class="subhead">Browse published AI x healthcare summaries.</p>
+    <nav>
+      <a href="./index.html">Today</a>
+      <a href="./archive.html" aria-current="page">Archive</a>
+    </nav>
+  </header>
+
+  <main class="container" id="archive-root">
+    <section class="notice">
+      <strong>Educational only, not medical advice.</strong>
+      <p>Summaries are AI-assisted. Always verify details with the original source.</p>
+    </section>
+
+    <section class="controls card">
+      <label>
+        Search
+        <input type="search" id="search-input" placeholder="Title, source, or tag" />
+      </label>
+      <label>
+        Tag
+        <select id="tag-filter">
+          <option value="">All tags</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="archive-list" class="stack"></section>
+  </main>
+
+  <script src="./js/common.js"></script>
+  <script src="./js/archive.js"></script>
+</body>
+</html>

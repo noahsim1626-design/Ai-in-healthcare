@@ -1,0 +1,24 @@
+name: Weekly Batch
+about: Paste this week's article links (one per line) for automated scheduling.
+title: "Weekly Batch: YYYY-MM-DD"
+labels:
+  - weekly-batch
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Paste up to 7 article URLs below.
+        - One per line is easiest.
+        - Blank lines and bullets are okay.
+  - type: textarea
+    id: urls
+    attributes:
+      label: Article URLs
+      description: Paste links here (plain lines, bullets, or mixed format).
+      placeholder: |
+        https://example.com/article-1
+        - https://example.com/article-2
+
+        * https://example.com/article-3
+    validations:
+      required: true
