@@ -4,6 +4,11 @@ on:
   issues:
     types: [opened, edited, reopened, labeled]
   workflow_dispatch:
+    inputs:
+      urls:
+        description: "Paste article URLs (one per line)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -11,8 +16,11 @@ permissions:
 
 jobs:
   ingest:
-    if: contains(github.event.issue.labels.*.name, 'weekly-batch')
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'weekly-batch'))
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +35,7 @@ jobs:
       - name: Run ingestion
         id: ingest
         env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_BODY: ${{ github.event_name == 'workflow_dispatch' && inputs.urls || github.event.issue.body }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: node scripts/ingest-weekly.js
 
@@ -37,10 +45,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add site/posts site/index.json ingest-report.md
-          git commit -m "chore: ingest weekly batch from issue #${{ github.event.issue.number }}"
+          git commit -m "chore: ingest weekly batch"
           git push origin main
 
       - name: Comment report on issue
+        if: github.event_name == 'issues'
         uses: actions/github-script@v7
         env:
           REPORT: ${{ steps.ingest.outputs.report }}
