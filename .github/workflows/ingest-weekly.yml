@@ -3,6 +3,7 @@ name: Ingest Weekly Batch
 on:
   issues:
     types: [opened, edited, reopened, labeled]
+  workflow_dispatch:
 
 permissions:
   contents: write
